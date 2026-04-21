@@ -9,4 +9,8 @@
 - install tailwind css
 - globle css or module css
 - image component
+  - lazy loading
+  - quality
+  - fill
+  - placeholder blur
   
