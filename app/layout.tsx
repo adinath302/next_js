@@ -1,6 +1,7 @@
 import './globals.css';
 // import Navigation from "../../component/Navigation"; // Moved to route-specific layouts
 import type { Metadata, Viewport } from 'next';
+import ConsoleFilter from "../component/ConsoleFilter";
 
 export const metadata: Metadata = {
   title: 'Next.js App',
@@ -18,8 +19,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-<html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
+        <ConsoleFilter />
         {children}
       </body>
     </html>
