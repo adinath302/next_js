@@ -1,9 +1,8 @@
-
+import ProductList from "./productList";
 const Products = async ({ searchParams }) => {
 
     const searchParam = await searchParams;
-    console.log(searchParam);
-    
+    console.log("outer",searchParam);
 
     const category = searchParam?.category || "all";
     const sort = searchParam?.sort || 'default';
@@ -11,6 +10,7 @@ const Products = async ({ searchParams }) => {
 
     return (
         <div>
+            <ProductList />
             Showing {category} products, sorted by {sort}, page {page}
         </div>
     )
