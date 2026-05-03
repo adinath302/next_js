@@ -1,6 +1,7 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  outputFileTracingRoot: __dirname,
+  allowedDevOrigins: ['192.168.34.19'],
   async headers() {
     return [
       {
@@ -16,4 +17,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
