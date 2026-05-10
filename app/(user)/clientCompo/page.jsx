@@ -7,7 +7,7 @@ import Counter from "./Counter";
 const url = "https://jsonplaceholder.typicode.com/posts";
 
 
-const clientCompo = () => {
+const ClientCompo = () => {
 
     const [postData, setPostData] = useState([]);
 
@@ -47,4 +47,4 @@ const clientCompo = () => {
     )
 }
 
-export default clientCompo;
+export default ClientCompo;

@@ -10,10 +10,23 @@ const DataFetchServer = () => {
     // Remove quotes from the name if present
     userName = userName.replace(/^["']|["']$/g, '').trim();
 
-    if (!userName || userName.length === 0) {
+    const isValidName = Boolean(userName && userName.length > 0);
+
+    useEffect(() => {
+        if (!isValidName) return;
+
+        const revealUserGender = async () => {
+            const res = await fetch(`https://api.genderize.io/?name=${userName}`)
+            const userData = await res.json()
+            setUserInfo(userData);
+        }
+
+        revealUserGender();
+    }, [isValidName, userName])
+
+    if (!isValidName) {
         return (
-            <div className="min-h-screen bg-gradient-to-brfrom-purple-50 via-blue-50 Ito-indigo-100 fl
-items-center justify-center p-4">
+            <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
                 <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full">
                     <div className="text-center">
                         <h1 className="text-2xl font-bold text-gray-800 mb-4">
@@ -28,18 +41,6 @@ items-center justify-center p-4">
             </div>
         );
     }
-
-    useEffect(() => {
-
-        export const revealUserGender = async () => {
-            const res = await fetch(`https://api.genderize.io/?name=${userName}`)
-            const userData = await res.json()
-            setUserInfo(userData);
-        }
-
-        revealUserGender();
-
-    }, [])
     console.log(userInfo);
 
     if (!userInfo.gender) return null

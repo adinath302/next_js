@@ -1,13 +1,11 @@
 'use client';
-
-import { promises } from "node:dns";
 import { useEffect } from "react";
 
-const loading = () => {
+const Loading = () => {
     useEffect(() => {
-        const runway = async((resolve) => {
-            await new promises((resolve) => setTimeout(resolve, 3000))
-        })
+        const runway = async (resolve) => {
+            await new Promise((resolve) => setTimeout(resolve, 3000))
+        }
         runway();
     }, [])
 
@@ -18,4 +16,4 @@ const loading = () => {
     )
 }
 
-export default loading;
+export default Loading;
