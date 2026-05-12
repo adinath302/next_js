@@ -1,5 +1,8 @@
+import { Suspense } from "react";
+import DataCard from "./DataCard";
+
 const DataFetchServer = async (props) => {
-const searchParams = await props.searchParams;
+    const searchParams = await props.searchParams;
     let userName = searchParams?.name || "";
 
     // Remove quotes from the name if present
@@ -24,39 +27,20 @@ items-center justify-center p-4">
         );
     }
 
-    const res = await fetch(`https://api.genderize.io/?name=${userName}`)
-    const userData = await res.json()
-    console.log(userData);
-    const confidencePercentage = userData.probability * 100;
-
-return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full animate-pulse-glow animate-fade-in-up">
-                <div className="text-center">
-                    <h1 className="text-2xl font-bold text-gray-800 mb-4">
-                        Gender Prediction
-                    </h1>
-                    <p className="text-lg text-gray-700 mb-2">
-                        Name: <span className="font-semibold">{userData.name}</span>
-                    </p>
-                    <p className="text-lg text-gray-700 mb-2">
-                        Gender: <span className="font-semibold capitalize">{userData.gender}</span>
-                    </p>
-                    <p className="text-lg text-gray-700">
-                        Confidence: <span className="font-semibold">{confidencePercentage}%</span>
-                    </p>
-<p className="text-sm text-gray-500 mt-4">
-                        Based on {userData.count.toLocaleString()} records
-                    </p>
-                    <div style={{ width: '100%', height: '12px', backgroundColor: '#e5e7eb', borderRadius: '9999px', marginTop: '16px', overflow: 'hidden' }}>
-                        <div style={{ width: `${confidencePercentage}%`, height: '100%', borderRadius: '9999px', background: 'linear-gradient(to right, #ec4899, #eab308)', transition: 'width 0.5s ease' }}>
-                        </div>
-                    </div>
-                </div>
+    return (
+        <div className="grid grid-cols-2 gap-3 h-full">
+            <div className="h-full flex justify-center items-center ">
+                <h2>
+                    Hii I am 1st component. In Loading.jsx I have to wait but in Suspense I don't. I support partial rendering. This means you can show a fallback UI (like a loading spinner or skeleton) for specific components while the rest of your application renders and remains interactive.
+                </h2>
             </div>
+            <Suspense fallback={<div className="h-full flex justify-center items-center">
+                <div className="animate-pulse text-gray-500">Loading...</div>
+            </div>}>
+                <DataCard userName={userName} />
+            </Suspense>
         </div>
     );
-
 }
 
 export default DataFetchServer;
