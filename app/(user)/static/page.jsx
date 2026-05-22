@@ -8,12 +8,12 @@ const page = async () => {
         <div>
             <h1>Doctors</h1>
             <ul>
-                {/* {doctors.map((doctor) => (
+                {doctors.map((doctor) => (
                     <li key={doctor.id}>{doctor.name}</li>
-                ))} */}
+                ))}
             </ul>
         </div>
     )
-}
+} 
 
 export default page

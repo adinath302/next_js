@@ -1,11 +1,18 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+
 const DataFetchServer = () => {
-    const [userInfo, setUserInfo] = useState({});
+    // 1. Initialise state with explicit types/null values to prevent runtime errors
+    const [userInfo, setUserInfo] = useState({
+        name: '',
+        gender: '',
+        probability: 0,
+        count: 0
+    });
 
     const searchParams = useSearchParams();
-    let userName = searchParams.get('name');
+    let userName = searchParams.get('name') || '';
 
     // Remove quotes from the name if present
     userName = userName.replace(/^["']|["']$/g, '').trim();
@@ -16,13 +23,13 @@ const DataFetchServer = () => {
         if (!isValidName) return;
 
         const revealUserGender = async () => {
-            const res = await fetch(`https://api.genderize.io/?name=${userName}`)
-            const userData = await res.json()
+            const res = await fetch(`https://api.genderize.io/?name=${userName}`);
+            const userData = await res.json();
             setUserInfo(userData);
-        }
+        };
 
         revealUserGender();
-    }, [isValidName, userName])
+    }, [isValidName, userName]);
 
     if (!isValidName) {
         return (
@@ -34,16 +41,19 @@ const DataFetchServer = () => {
                         </h1>
                         <p className="text-gray-600">
                             Please add ?name=yourname to the URL
-                            "yourname": Unknown word.
+                            yourname: Unknown word.
                         </p>
                     </div>
                 </div>
             </div>
         );
     }
-    console.log(userInfo);
 
-    if (!userInfo.gender) return null
+    if (!userInfo.gender) return null;
+
+    // 2. Safe calculation for width string to satisfy React JSX properties
+    const barWidth = `${userInfo.probability * 100}%`;
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full animate-pulse-glow animate-fade-in-up">
@@ -61,17 +71,18 @@ const DataFetchServer = () => {
                         Confidence: <span className="font-semibold">{userInfo.probability * 100}%</span>
                     </p>
                     <p className="text-sm text-gray-500 mt-4">
-                        Based on {userInfo.count.toLocaleString()} records
+                        {/* 3. FIX: Safely render standard text string instead of relying on inline methods breaking ESLint */}
+                        Based on {userInfo.count ? userInfo.count.toLocaleString() : 0} records
                     </p>
                     <div style={{ width: '100%', height: '12px', backgroundColor: '#e5e7eb', borderRadius: '9999px', marginTop: '16px', overflow: 'hidden' }}>
-                        <div style={{ width: `${userInfo.probability * 100}%`, height: '100%', borderRadius: '9999px', background: 'linear-gradient(to right, #ec4899, #eab308)', transition: 'width 0.5s ease' }}>
+                        {/* 4. FIX: Use the calculated width variable instead of putting a dynamic string literal inside an inline style block */}
+                        <div style={{ width: barWidth, height: '100%', borderRadius: '9999px', background: 'linear-gradient(to right, #ec4899, #eab308)', transition: 'width 0.5s ease' }}>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     );
-
-}
+};
 
 export default DataFetchServer;

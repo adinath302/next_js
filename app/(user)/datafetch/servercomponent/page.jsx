@@ -19,7 +19,7 @@ items-center justify-center p-4">
                         </h1>
                         <p className="text-gray-600">
                             Please add ?name=yourname to the URL
-                            "yourname": Unknown word.
+                            yourname: Unknown word.
                         </p>
                     </div>
                 </div>
@@ -31,7 +31,7 @@ items-center justify-center p-4">
         <div className="grid grid-cols-2 gap-3 h-full">
             <div className="h-full flex justify-center items-center ">
                 <h2>
-                    Hii I am 1st component. In Loading.jsx I have to wait but in Suspense I don't. I support partial rendering. This means you can show a fallback UI (like a loading spinner or skeleton) for specific components while the rest of your application renders and remains interactive.
+                    Hii I am 1st component. In Loading.jsx I have to wait but in Suspense I dont. I support partial rendering. This means you can show a fallback UI like a loading spinner or skeleton for specific components while the rest of your application renders and remains interactive.
                 </h2>
             </div>
             <Suspense fallback={<div className="h-full flex justify-center items-center">
