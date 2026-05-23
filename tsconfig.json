@@ -36,7 +36,7 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "next.config.js"
-  ],
+, "app/(user)/rendering/static/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]

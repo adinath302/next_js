@@ -1,34 +1,28 @@
 import { db } from "@/config/db";
 import { unstable_cache } from "next/cache";
 
-// 1. Force Next.js to bake this into a flat HTML file during build time
-export const dynamic = "force-static";
+// FORCE Next.js to register this page as an ISR route at build time
+export const revalidate = 30;
 
-// 2. Wrap the query so Next.js saves the database result to disk
-const getStaticDoctors = unstable_cache(
+const getCachedDoctors = unstable_cache(
     async () => {
-        const [rows] = await db.execute("SELECT * FROM Doctors");
+        const [rows] = await db.execute("select * from doctors");
         return rows;
     },
-    ["my-doctors-cache-key"] // Unique name for this cache packet
+    ["doctors-list-key"],
+    { revalidate: 30 } // Must match the export above
 );
 
 export default async function StaticPage() {
-    // 3. Fetch data from the saved disk cache instead of hitting MySQL live
-    const doctors = await getStaticDoctors();
+    const doctors = await getCachedDoctors();
+
+    console.log("=== STATIC DOCTORS FETCH TRIGGERED ===");
 
     return (
-        <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-            <h1>Doctors Directory (True Static)</h1>
-            <p style={{ color: 'gray' }}>This data is frozen. Changing the DB won't update this screen.</p>
-            
-            <ul>
-                {doctors.map((doctor) => (
-                    <li key={doctor.DoctorID} style={{ margin: '10px 0' }}>
-                        <strong>{doctor.Name}</strong> - {doctor.Specialization}
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <ul>
+            {doctors.map((doctor) => (
+                <li key={doctor.doctor_id}>{doctor.first_name}</li>
+            ))}
+        </ul>
     );
 }
