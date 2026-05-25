@@ -1,28 +1,25 @@
-import { db } from "@/config/db";
-import { unstable_cache } from "next/cache";
+// import { db } from "@/config/db";
 
-// FORCE Next.js to register this page as an ISR route at build time
-export const revalidate = 30;
+// // 2. Set the global ISR revalidation timer
+// // export const revalidate = 30;
 
-const getCachedDoctors = unstable_cache(
-    async () => {
-        const [rows] = await db.execute("select * from doctors");
-        return rows;
-    },
-    ["doctors-list-key"],
-    { revalidate: 30 } // Must match the export above
-);
 
-export default async function StaticPage() {
-    const doctors = await getCachedDoctors();
+// // 3. Create a cached function to fetch doctors with a specific cache key
+// export default async function StaticPage() {
 
-    console.log("=== STATIC DOCTORS FETCH TRIGGERED ===");
+//     const doctors = await getDoctorsCached();
 
-    return (
-        <ul>
-            {doctors.map((doctor) => (
-                <li key={doctor.doctor_id}>{doctor.first_name}</li>
-            ))}
-        </ul>
-    );
-}
+
+//     return (
+//         <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+//             <h1>Doctors Directory (True ISR Active)</h1>
+//             <ul>
+//                 {doctors.map((doctor, index) => (
+//                     <li key={doctor.doctor_id ?? index}>
+//                         {doctor.Name ?? "Unnamed Doctor"}
+//                     </li>
+//                 ))}
+//             </ul>
+//         </div>
+//     );
+// }
