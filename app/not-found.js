@@ -2,14 +2,14 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <main className="min-h-screen bg-linear-to-br from-purple-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <section
         role="alert"
         aria-label="Page not found"
         className="w-full max-w-lg bg-white/80 backdrop-blur rounded-2xl shadow-2xl p-8 animate-fade-in-up border border-white/60"
       >
         <div className="text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-500 text-white shadow-lg animate-pulse-glow">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-linear-to-br from-purple-500 to-indigo-500 text-white shadow-lg animate-pulse-glow">
             404
           </div>
 

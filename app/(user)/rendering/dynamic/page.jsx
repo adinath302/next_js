@@ -2,7 +2,6 @@ import Link from "next/link";
 import { db, verifyConnection } from "@/config/db";
 import { cache } from "react";
 
-
 export const dynamic = "force-dynamic"; // it makes the page dynamic
 
 const Page = async () => {
@@ -10,11 +9,11 @@ const Page = async () => {
     const rows = await getallDoctors();
 
     console.log("featching doctors ");
-return (
+    return (
         <div style={{ padding: '24px', maxWidth: '600px', margin: '40px auto', fontFamily: 'system-ui, sans-serif' }}>
             <h1 style={{ fontSize: 24, fontWeight: 800, marginBottom: 12 }}>Doctors</h1>
             <div style={{ color: '#64748b', marginBottom: 20 }}>
-              First doctor route: <span style={{ fontFamily: 'monospace' }}>/rendering/dynamic/1</span>
+                First doctor route: <span style={{ fontFamily: 'monospace' }}>/rendering/dynamic/1</span>
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: '20px 0' }}>
                 <DoctorsList rows={rows} />
@@ -25,9 +24,9 @@ return (
 
 export default Page;
 
-const DoctorsList = async ({rows}) => {
+const DoctorsList = async ({ rows }) => {
 
-console.log("doctors_list");
+    console.log("doctors_list");
 
     return (
         <ul>
@@ -68,7 +67,7 @@ console.log("doctors_list");
     )
 }
 
-const getallDoctors = cache(async () => {
+const getallDoctors = cache(async () => { // cache the function result to avoid refetching on every call
     const [rows] = await db.execute("SELECT * FROM Doctors");
     console.log("featching doctors ");
     return rows;

@@ -3,7 +3,7 @@ import { db } from "@/config/db";
 
 export const dynamic = "force-dynamic";
 
-const getDoctors = cache(async () => {
+const getDoctors = cache(async () => { // caching the function result to avoid multiple database calls on each request
   const [rows] = await db.execute("SELECT * FROM Doctors");
   return rows;
 });
