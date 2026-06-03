@@ -1,6 +1,8 @@
 'use client';
 
-// import { contactAction } from "./contact.action";
+import { useActionState } from "react";
+
+import { contactAction } from "./contact.action";
 
 // export const metadata = {
 //   title: "Contact page",
@@ -8,18 +10,20 @@
 // };
 
 
-const contactAction = (formData) => { 
-  const { fullName, email, message } = Object.fromEntries(formData.entries())
-  console.log(fullName, email, message);
-}
+// const contactAction = (formData) => { 
+//   const { fullName, email, message } = Object.fromEntries(formData.entries())
+//   console.log(fullName, email, message);
+// }
 
 const ContactPage = () => {
+
+  const [state, Formaction, isPending] =(contactAction, null);
 
   return (
     <div className="max-w-xl mx-auto p-6">
       <h1 className="text-2xl font-semibold mb-4">Contact</h1>
 
-      <form action={contactAction} className="space-y-4">
+      <form action={Formaction} className="space-y-4">
         <div className="space-y-1">
           <label htmlFor="fullName" className="block text-sm font-medium">
             Full name
@@ -64,11 +68,19 @@ const ContactPage = () => {
 
         <button
           type="submit"
+          disabled={isPending}
           className="w-full bg-black text-white font-medium rounded px-4 py-2 hover:opacity-90"
         >
-          Send Message
+          {
+            isPending ? <span>Loading...</span> : <span>Send message</span>
+          }
         </button>
       </form>
+      <section>{
+        state && (
+          <p className={` p-2 font-semibold flex items-center justify-center ${state.success ? "bg-green-500" : "bg-red-500"}`}>{state.message}</p>
+        )
+      }</section>
     </div>
   );
 };
