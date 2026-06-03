@@ -1,11 +1,20 @@
-import { contactAction } from "./contact.action";
-export const metadata = {
-  title: "Contact page",
-  description: "Get in touch with us through our contact form. We value your feedback and inquiries, and we're here to assist you with any questions or concerns you may have. Please fill out the form below, and we'll get back to you as soon as possible.",
-};
+'use client';
+
+// import { contactAction } from "./contact.action";
+
+// export const metadata = {
+//   title: "Contact page",
+//   description: "Get in touch with us through our contact form. We value your feedback and inquiries, and we're here to assist you with any questions or concerns you may have. Please fill out the form below, and we'll get back to you as soon as possible.",
+// };
+
+
+const contactAction = (formData) => { 
+  const { fullName, email, message } = Object.fromEntries(formData.entries())
+  console.log(fullName, email, message);
+}
 
 const ContactPage = () => {
-                             
+
   return (
     <div className="max-w-xl mx-auto p-6">
       <h1 className="text-2xl font-semibold mb-4">Contact</h1>
