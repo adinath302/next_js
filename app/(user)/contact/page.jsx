@@ -3,12 +3,12 @@
 import { useActionState } from "react";
 
 import { contactAction } from "./contact.action";
+import { useFormStatus } from "react-dom";
 
 // export const metadata = {
 //   title: "Contact page",
 //   description: "Get in touch with us through our contact form. We value your feedback and inquiries, and we're here to assist you with any questions or concerns you may have. Please fill out the form below, and we'll get back to you as soon as possible.",
 // };
-
 
 // const contactAction = (formData) => { 
 //   const { fullName, email, message } = Object.fromEntries(formData.entries())
@@ -17,7 +17,7 @@ import { contactAction } from "./contact.action";
 
 const ContactPage = () => {
 
-  const [state, Formaction, isPending] =(contactAction, null);
+  const [state, Formaction, isPending] = useActionState(contactAction, null);
 
   return (
     <div className="max-w-xl mx-auto p-6">
@@ -66,15 +66,7 @@ const ContactPage = () => {
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={isPending}
-          className="w-full bg-black text-white font-medium rounded px-4 py-2 hover:opacity-90"
-        >
-          {
-            isPending ? <span>Loading...</span> : <span>Send message</span>
-          }
-        </button>
+        <Submit />
       </form>
       <section>{
         state && (
@@ -87,3 +79,19 @@ const ContactPage = () => {
 
 export default ContactPage;
 
+const Submit = () => {
+
+  const { pending, data, method, action } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="w-full bg-black text-white font-medium rounded px-4 py-2 hover:opacity-90"
+    >
+      {
+        pending ? <span>Loading...</span> : <span>Send message</span>
+      }
+    </button>
+  )
+}
