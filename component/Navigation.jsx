@@ -12,6 +12,7 @@ export default function Navigation() {
                     <li><Link href="/serverCompo">serverCompo</Link></li>
                     <li><Link href="/service">service</Link></li>
                     <li><Link href="/contact">contact</Link></li>
+                    <li><Link href="/signup">signup</Link></li>
                 </ul>
             </nav>
         </header>

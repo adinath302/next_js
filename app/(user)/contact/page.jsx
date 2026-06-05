@@ -1,7 +1,6 @@
 'use client';
 
 import { useActionState } from "react";
-
 import { contactAction } from "./contact.action";
 import { useFormStatus } from "react-dom";
 
