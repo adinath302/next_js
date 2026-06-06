@@ -1,6 +1,11 @@
+"use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function NotFound() {
+
+  const router = useRouter();
+
   return (
     <main className="min-h-screen bg-linear-to-br from-purple-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <section
@@ -19,6 +24,14 @@ export default function NotFound() {
           </p>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className="inline-flex items-center justify-center rounded-xl bg-white text-gray-900 px-5 py-3 font-semibold border border-gray-200 hover:bg-gray-50 transition-colors"
+            >
+              Go Back
+            </button>
+
             <Link
               href="/"
               className="inline-flex items-center justify-center rounded-xl bg-gray-900 text-white px-5 py-3 font-semibold hover:bg-gray-800 transition-colors"
@@ -33,6 +46,7 @@ export default function NotFound() {
               Learn more
             </Link>
           </div>
+
 
           <div className="mt-6">
             <div className="text-sm text-gray-500">Tip: use the navigation links or go back to the homepage.</div>
