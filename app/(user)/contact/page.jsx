@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState } from "react";
+import { useActionState, useState, useTransition } from "react";
 import { contactAction } from "./contact.action";
 import { useFormStatus } from "react-dom";
 
@@ -14,15 +14,30 @@ import { useFormStatus } from "react-dom";
 //   console.log(fullName, email, message);
 // }
 
+
 const ContactPage = () => {
 
-  const [state, Formaction, isPending] = useActionState(contactAction, null);
+  // const [state, Formaction, isPending] = useActionState(contactAction, null);
+
+  const [state, startTransition] = useTransition()
+  const [contactFormResponse, setContactFormResponse] = useState(null)
+  
+  const handleContactSubmit = (formData) => {
+    const { fullName, email, message } = Object.fromEntries(formData) // Convert the FormData object into a regular object to extract the form values
+
+    startTransition(async () => { // Start a transition to handle the form submission without blocking the UI
+      const res = await contactAction(fullName, email, message)
+      setContactFormResponse(res) // Update the state with the response from the contactAction
+    })
+  }
+
+
 
   return (
     <div className="max-w-xl mx-auto p-6">
       <h1 className="text-2xl font-semibold mb-4">Contact</h1>
 
-      <form action={Formaction} className="space-y-4">
+      <form action={handleContactSubmit} className="space-y-4">
         <div className="space-y-1">
           <label htmlFor="fullName" className="block text-sm font-medium">
             Full name
@@ -66,10 +81,11 @@ const ContactPage = () => {
         </div>
 
         <Submit />
+
       </form>
       <section>{
-        state && (
-          <p className={` p-2 font-semibold flex items-center justify-center ${state.success ? "bg-green-500" : "bg-red-500"}`}>{state.message}</p>
+        contactFormResponse && (  
+          <p className={` p-2 font-semibold flex items-center justify-center ${contactFormResponse.success ? "bg-green-500" : "bg-red-500"}`}>{contactFormResponse.message}</p>
         )
       }</section>
     </div>
